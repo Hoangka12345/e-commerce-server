@@ -1,7 +1,7 @@
 "use strict";
 
 const JWT = require("jsonwebtoken");
-const { HEADER } = require("../constants/header");
+const { HEADER } = require("../constants");
 const {
     UnauthorizedError,
     NotFoundError,
@@ -29,6 +29,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
 
 const authentication = asyncHandler(async (req, res, next) => {
     const userId = req.headers[HEADER.CLIENT_ID];
+    console.log(userId);
     if (!userId) throw new UnauthorizedError("invalid request");
 
     const keyStore = await findKeyTokenByUser(userId);

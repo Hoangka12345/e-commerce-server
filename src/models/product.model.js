@@ -45,12 +45,24 @@ var productSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.Mixed,
             required: true,
         },
+        Product_ratingAverage: {
+            type: Number,
+            default: 4.5,
+            min: [1, "Rating must be more than or equal 1"],
+            max: [5, "Rating must be less than or equal 5"],
+            set: (val) => Math.round(val * 10) / 10,
+        },
+        isDraft: { type: Boolean, default: true, index: true, select: false },
+        isPublished: { type: Boolean, default: false, index: true, select: false },
     },
     {
         timestamps: true,
         collection: COLLECTION_NAME,
     }
 );
+
+// create index for search
+productSchema.index({ product_name: "text" });
 
 // generate product slug before create new
 productSchema.pre("save", function (next) {

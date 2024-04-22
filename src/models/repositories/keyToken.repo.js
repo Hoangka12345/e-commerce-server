@@ -1,5 +1,6 @@
 "use strict";
 
+const { default: mongoose } = require("mongoose");
 const keyTokenModel = require("../keyToken.model");
 
 const findAndUpdate = async (filter, update, options) => {

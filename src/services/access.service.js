@@ -11,7 +11,7 @@ const {
     AuthFailureError,
 } = require("../core/error.response");
 const { findShopByEmail } = require("./shop.service");
-const { ROLE } = require("../constants/role");
+const { ROLE } = require("../constants");
 
 class AccessService {
     static login = async ({ email, password }) => {

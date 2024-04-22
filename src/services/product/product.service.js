@@ -1,6 +1,7 @@
 "use strict";
 
 const productModel = require("../../models/product.model");
+const { updateProductById } = require("../../models/repositories/product.repo");
 
 // define base product class
 class Product {
@@ -29,6 +30,15 @@ class Product {
         const newProduct = new productModel({ ...this, _id: productId });
         await newProduct.save();
         return newProduct;
+    }
+
+    async updateProduct(productId, updateBody) {
+        const updateProduct = await updateProductById(
+            productId,
+            updateBody,
+            productModel
+        );
+        return updateProduct;
     }
 }
 

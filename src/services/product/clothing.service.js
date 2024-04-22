@@ -1,6 +1,12 @@
 "use strict";
 
+const { BadRequestError } = require("../../core/error.response");
 const clothingModel = require("../../models/clothing.model");
+const { updateProductById } = require("../../models/repositories/product.repo");
+const {
+    removeUndefiedFromNestedObject,
+    removeUndefiedFromObject,
+} = require("../../utils");
 const Product = require("./product.service");
 
 class Clothing extends Product {
@@ -15,6 +21,23 @@ class Clothing extends Product {
         if (!newProduct) throw new BadRequestError("create product error");
 
         return newProduct;
+    }
+
+    async updateProduct(productId) {
+        const objectParams = this;
+
+        if (objectParams.product_attributes) {
+            const newAtributes = removeUndefiedFromObject(
+                objectParams.product_attributes
+            );
+            await updateProductById(productId, newAtributes, clothingModel);
+        }
+
+        const newObjectParams = removeUndefiedFromNestedObject(objectParams);
+        const updateProduct = await super.updateProduct(productId, newObjectParams);
+        if (!updateProduct) throw new BadRequestError("update product error");
+
+        return updateProduct;
     }
 }
 

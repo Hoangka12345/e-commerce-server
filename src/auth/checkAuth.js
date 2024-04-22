@@ -1,6 +1,6 @@
 "use strict";
 
-const { HEADER } = require("../constants/header");
+const { HEADER } = require("../constants");
 const { AuthFailureError } = require("../core/error.response");
 const { asyncHandler } = require("../helpers/asyncHandler");
 const { findApiKeyByKey } = require("../services/apiKey.service");
